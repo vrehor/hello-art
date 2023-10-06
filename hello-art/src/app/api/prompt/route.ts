@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       ],
     });
 
-    return new NextResponse(text, {
+    return new NextResponse("text", {
       status: 200,
     });
   } catch (e) {

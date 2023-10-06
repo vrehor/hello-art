@@ -26,7 +26,8 @@ export const UserForm = () => {
     console.log(state);
   }, [state]);
 
-  const nextStep = (data) => {
+    // @ts-ignore
+    const nextStep = (data) => {
     if (state.step === 6) {
         const fn = async () => {
             const formData = new FormData();
