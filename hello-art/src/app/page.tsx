@@ -58,7 +58,7 @@ const Home = () => {
                 </form>
             )}
 
-            {image && <img alt="Generated image" src={image} />}
+            {image && <img alt="Generated image" src={image} className="h-1/3 w-1/3" />}
 
             <ReCAPTCHA
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY || ''}
