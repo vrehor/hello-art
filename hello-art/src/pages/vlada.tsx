@@ -20,8 +20,7 @@ const Vlada = () => {
             })
 
             // Handle response if necessary
-            const blob = await response.blob();
-            setImage(URL.createObjectURL(blob))
+            setImage(await response.text())
             // ...
         } catch (e) {
             console.error(e)
