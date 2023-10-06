@@ -3,6 +3,7 @@
 import React, { FormEvent, useRef, useState } from 'react';
 
 import ReCAPTCHA from 'react-google-recaptcha';
+import { UserForm } from '@/app/components/UserForm';
 
 const Home = () => {
   const [isLoading, setLoading] = useState(false);
@@ -41,23 +42,14 @@ const Home = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-2">
-      <h1>This is a test</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-2">
       {isLoading ? (
         <p>something is loading</p>
       ) : (
-        <form onSubmit={onSubmit} className="flex flex-col gap-2">
-          <textarea
-            name="message"
-            required={true}
-            rows={4}
-            cols={40}
-            maxLength={1000}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <UserForm />
+        // <form onSubmit={onSubmit} className="flex flex-col gap-2">
+        //   <button type="submit">Submit</button>
+        // </form>
       )}
 
       {image && <img alt="Generated image" src={image} className="h-1/3 w-1/3" />}
