@@ -1,0 +1,9 @@
+# Misc
+.github/*
+node_modules/*
+README.md
+
+# Environment
+.env
+
+
