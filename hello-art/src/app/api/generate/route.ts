@@ -34,7 +34,6 @@ export async function POST(request: NextRequest) {
 
     try {
         const blob = await HuggingFace.execute(message);
-        console.log('output', blob)
         const headers = new Headers();
         headers.set("Content-Type", "image/*");
         return new NextResponse(blob, {status: 200, statusText: "OK", headers});
