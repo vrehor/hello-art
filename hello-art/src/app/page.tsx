@@ -1,17 +1,19 @@
 "use client"
 
 import React, {FormEvent, useRef, useState} from "react";
-
+import Image from 'next/image'
 import ReCAPTCHA from 'react-google-recaptcha';
 
 const Home = () => {
     const [isLoading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [image, setImage] = useState<string | null>(null);
 
     const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        setImage(null);
         setLoading(true);
 
         try {
@@ -19,6 +21,7 @@ const Home = () => {
 
             const response = await fetch('/api/generate', {
                 method: 'POST',
+                cache: "no-cache",
                 body: JSON.stringify({
                     message,
                     token,
@@ -26,7 +29,8 @@ const Home = () => {
             })
 
             // Handle response if necessary
-            await response.json()
+            const blob = await response.blob();
+            setImage(URL.createObjectURL(blob))
             // ...
         } catch (e) {
             console.error(e)
@@ -53,6 +57,9 @@ const Home = () => {
                     <button type="submit">Submit</button>
                 </form>
             )}
+
+            {image && <Image src={image} alt="Generated image"/>}
+
             <ReCAPTCHA
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY || ''}
                 size="invisible"

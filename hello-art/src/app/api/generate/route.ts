@@ -1,4 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
+import {HuggingFace} from "@/services/tti/HuggingFace";
 
 type RequestData = {
     message: string
@@ -31,7 +32,16 @@ export async function POST(request: NextRequest) {
         });
     }
 
-    return new NextResponse(JSON.stringify({answer: "John Doe"}), {
-        status: 200,
-    });
+    try {
+        const blob = await HuggingFace.execute(message);
+        console.log('output', blob)
+        const headers = new Headers();
+        headers.set("Content-Type", "image/*");
+        return new NextResponse(blob, {status: 200, statusText: "OK", headers});
+    } catch (e) {
+        console.log(e);
+        return new NextResponse("Generation failed", {
+            status: 400,
+        });
+    }
 }
