@@ -1,13 +1,13 @@
 "use client"
 
 import React, {FormEvent, useRef, useState} from "react";
-import Image from 'next/image'
+
 import ReCAPTCHA from 'react-google-recaptcha';
 
 const Home = () => {
     const [isLoading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const [image, setImage] = useState<string | null>(null);
+    const [image, setImage] = useState<string|null>(null);
 
     const reCaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -58,7 +58,7 @@ const Home = () => {
                 </form>
             )}
 
-            {image && <Image src={image} alt="Generated image"/>}
+            {image && <img alt="Generated image" src={image} />}
 
             <ReCAPTCHA
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY || ''}
