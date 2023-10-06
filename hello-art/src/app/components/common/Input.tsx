@@ -11,7 +11,6 @@ export const Input = ({ name, onChange, value }: Props) => {
     <textarea
       className={'input'}
       name={name}
-      required={true}
       rows={4}
       cols={40}
       maxLength={1000}

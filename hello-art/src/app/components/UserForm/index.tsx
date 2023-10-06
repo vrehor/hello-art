@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Input } from '@/app/components/common/Input';
+import { useForm } from 'react-hook-form';
 
-import LOGO from 'LOGO.png';
+enum StepType {
+  init,
+  bio,
+  picture1,
+  picture2,
+}
 
 const initialState = {
   step: 0,
@@ -12,14 +18,41 @@ const initialState = {
 };
 
 export const UserForm = () => {
+  const { register, handleSubmit } = useForm();
   const [state, setState] = useState<typeof initialState>(initialState);
+    const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
     console.log(state);
   }, [state]);
 
-  const nextStep = () => {
-    setState({ ...state, step: state.step + 1 });
+  const nextStep = (data) => {
+    if (state.step === 6) {
+        const fn = async () => {
+            const formData = new FormData();
+            formData.append("personImage", data.personImage[0]);
+            formData.append("midjourneyImage", data.midjourneyImage[0]);
+
+            try {
+                const response = await fetch('/api/magic', {
+                    method: 'POST',
+                    cache: "no-cache",
+                    body: formData,
+                })
+
+                // Handle response if necessary
+                setImage(await response.text())
+                setState({ ...state, step: state.step + 1 });
+                // ...
+            } catch (e) {
+                console.error(e)
+            }
+        }
+
+        fn();
+    } else {
+      setState({ ...state, step: state.step + 1 });
+    }
   };
 
   const prevStep = () => {
@@ -34,7 +67,7 @@ export const UserForm = () => {
     switch (state.step) {
       case 0:
         return (
-          <div className={'flex flex-col justify-between text-center'}>
+          <div className="flex flex-col justify-between text-center">
             <img src={'LOGO.png'} style={{ height: 20 }} />
             <h1>
               Tell us about yourself <br /> & we will make some AI magic happen.{' '}
@@ -48,8 +81,8 @@ export const UserForm = () => {
       case 1:
         return (
           <div className={'flex flex-col gap-10'}>
-            <h1>What is your first name?</h1>
-            <Input name="firstName" onChange={handleChange} value={state.firstName} />
+            <h1>Write us your bio</h1>
+            <Input name="bio" onChange={handleChange} value={state.firstName} />
           </div>
         );
       case 2:
@@ -86,33 +119,36 @@ export const UserForm = () => {
       case 6:
         return (
           <div className={'flex flex-col  gap-10'}>
-            {/*TODO: Midjurney temp step (with upload button) */}
-            {/*<div className={'upload'}>*/}
-            {/*  <h2>Click or drag a file to upload</h2>*/}
-            {/*  <h2>SVG, PNG, JPG or GIF (max. 800x400px)</h2>*/}
-            {/*</div>*/}
+            <h1>Generate picture in midjourney that represents you</h1>
+            <input type="file" {...register('personImage')} />
+            <input type="file" {...register('midjourneyImage')} />
           </div>
         );
       case 7:
-        return <div className={'flex flex-col  gap-10'}>{/*TODO: final */}</div>;
+        return <div className={'flex flex-col  gap-10'}>
+            {image && <img alt="Generated image" src={image} style={{width: '200px', height: '200px'}}/>}
+        </div>;
     }
   };
 
   return (
-    <div className={'card'}>
-      <h1>{state.step > 0 ? `${state.step} of 7` : ''}</h1>
-      <div className={'cardContent'}>{renderSwitch()}</div>
+    <form onSubmit={handleSubmit(nextStep)}>
+      <div className={'card'}>
+        <h1>{state.step > 0 ? `${state.step} of 7` : ''}</h1>
 
-      {state.step > 0 && (
-        <div className={'cardButtons'}>
-          <button className={'buttonBack'} onClick={prevStep} disabled={state.step < 1}>
-            Back
-          </button>
-          <button className={'button'} onClick={nextStep}>
-            Continue
-          </button>
-        </div>
-      )}
-    </div>
+        <div className={'cardContent'}>{renderSwitch()}</div>
+
+        {state.step > 0 && (
+          <div className={'cardButtons'}>
+            <button className={'buttonBack'} onClick={prevStep} disabled={state.step < 1}>
+              Back
+            </button>
+            <button className={'button'} type={'submit'}>
+              Continue
+            </button>
+          </div>
+        )}
+      </div>
+    </form>
   );
 };
