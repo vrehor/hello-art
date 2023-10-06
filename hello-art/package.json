@@ -14,10 +14,14 @@
     "@huggingface/agents": "^0.0.5",
     "@huggingface/hub": "^0.8.6",
     "@huggingface/inference": "^2.5.2",
+    "ai": "^2.2.14",
     "next": "13.5.4",
+    "openai": "^4.11.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-google-recaptcha": "^3.1.0"
+    "react-google-recaptcha": "^3.1.0",
+    "replicate": "^0.20.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
