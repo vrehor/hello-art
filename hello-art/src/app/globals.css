@@ -18,24 +18,32 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+  /*background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))*/
+  /*  rgb(var(--background-start-rgb));*/
+  background: black;
+}
+
+h1 {
+  font-size: 20px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
   background: white;
-  height: 422px;
+  height: 442px;
   width: 720px;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
+  padding: 32px;
 }
 
 .cardContent {
   display: flex;
-  flex: 1;
+  flex: 4;
+  margin-top: 32px;
+  text-align: center;
 }
 
 .cardButtons {
@@ -43,14 +51,50 @@ body {
   flex: 1;
   justify-content: space-around;
   align-content: space-around;
-  gap: 100px;
+  gap: 32px;
+}
+
+.buttonStart {
+  background: blue;
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+  height: 64px;
+  font-size: 24px;
 }
 
 .button {
+  width: 300px;
+  height: 64px;
+  background: blue;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 20px;
+}
 
+.buttonBack {
+  width: 300px;
+  height: 64px;
+  background: lightgray;
+  color: black;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 20px;
 }
 
 .input {
   border: 1px solid rgb(var(--foreground-rgb));
-    border-radius: 5px;
+  border-radius: 5px;
+  height: 56px;
+  font-size: 20px;
+}
+
+.upload {
+  flex: 1;
+  margin-bottom: 20px;
+  padding: 20px;
+  align-items: center;
+  border: 2px solid gray;
+  border-radius: 8px;
 }
